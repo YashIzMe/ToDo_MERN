@@ -12,6 +12,5 @@ const connectDatabase = require("./db/conn");
 connectDatabase();
 app.listen(port, () => {
   // perform a database connection when server starts
-
   console.log(`Server is running on port: ${port}`);
 });
