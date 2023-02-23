@@ -9,7 +9,7 @@ app.use(express.json());
 const connectDatabase = require("./db/conn");
  
 connectDatabase();
-app.use("/",require('./routes/record'))
+app.use("/api",require('./routes/record'))
 
 app.listen(port, () => {
   // perform a database connection when server starts

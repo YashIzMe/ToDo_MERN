@@ -26,7 +26,7 @@ exports.signupUser = async (req, res, next) => {
 // Login user
 exports.loginUser = async (req, res, next) => {
 
-    const { userId, password } = req.body;
+    const { email, password } = req.body;
 
     const user = await User.findOne({ email });
 
@@ -43,11 +43,11 @@ exports.loginUser = async (req, res, next) => {
 };
 
 exports.updateUser = async (req, res, next) => {
-    const { name, email, password, profilePic, contact } = req.body;
+    const { name, email, profilePic, contact } = req.body;
     const user = await User.findOne({ email });
 
     if (user) {
-        const updatedUser = await User.update({name: name})
+        const updatedUser = await User.findOneAndUpdate(user,{name: name})
     }
 
 };
