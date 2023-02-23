@@ -13,7 +13,8 @@ const Auth = () => {
   const [password, setPassword] = useState('');
   const [image, setImage] = useState(null);
   const [showImage, setShowImage] = useState(null);
-  console.log(image)
+  const [contact, setContact] = useState("");
+  // console.log(image)
   const changeAuthMode = () => {
     setEmail("");
     setPassword("");
@@ -146,6 +147,17 @@ const Auth = () => {
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+          <div className="form-group mt-3">
+            <label>Enter Your Contact No.</label>
+            <input
+              required
+              type="text"
+              className="form-control mt-1"
+              placeholder="+9198944XXXXX"
+              value={contact}
+              onChange={(e) => setContact(e.target.value)}
             />
           </div>
           <div className="d-grid gap-2 mt-3">
