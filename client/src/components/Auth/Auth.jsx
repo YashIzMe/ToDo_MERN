@@ -1,9 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { FaUserCircle } from 'react-icons/fa';
 import { useNavigate } from "react-router-dom";
+import axios from 'axios';
+import { DataContext } from "../../context/DataProvider";
 
-const Auth = () => {
+const server = "http://localhost:5000";
+
+
+const Auth = ({ isUserAuthenticated }) => {
 
   const navigation = useNavigate();
 
@@ -14,6 +19,12 @@ const Auth = () => {
   const [image, setImage] = useState(null);
   const [showImage, setShowImage] = useState(null);
   const [contact, setContact] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [passError, setPassError] = useState("");
+  
+  const imageUrl = "https://cdn-icons-png.flaticon.com/512/149/149071.png";
+
+  const { setAccount } = useContext(DataContext);
   // console.log(image)
   const changeAuthMode = () => {
     setEmail("");
@@ -22,17 +33,55 @@ const Auth = () => {
     setAuthMode(authMode === "signin" ? "signup" : "signin");
   };
   
-  const handleLogin = () => {
-    console.log(email);
-    console.log(password);
-    navigation('/home');
+  const handleLogin = (e) => {
+
+    e.preventDefault()
+    try {
+      axios.post(server + "/api/login", {
+        email,
+        password
+      }).then(res => {
+          if(res.status === 200) {
+            setAccount({ name: res.data.user.name, id: res.data.user._id })
+            // console.log(res.data.user)
+            isUserAuthenticated(true);
+            navigation('/home');
+          }
+      }).catch(err=> {
+        console.log(err);
+      })
+      
+    } catch (error) {
+      console.log(error.message);
+    }
   }
 
-  const handleSignUp = () => {
-    console.log(userName);
-    console.log(email);
-    console.log(password);
+  const handleSignUp = (e) => {
+    e.preventDefault()
+    try {
+      axios.post(server+"/api/signup", {
+        name: userName,
+        email, 
+        password, 
+        profilePic: imageUrl, 
+        contact
+      }).then((res) => {
+        if(res.data.status) {
+          setEmailError("");
+          setAuthMode("signin");
+        }
+        console.log(res)
+      }).catch(error => {
+        if(error.response.data.err === "Email already exists") {
+          setEmailError("Email already exists")
+        }
+      });
+    } catch (error) {
+      console.log("err", error)
+      
+    }
   }
+
 
   // SIGN IN
   if (authMode === "signin") {
@@ -71,7 +120,7 @@ const Auth = () => {
               />
             </div>
             <div className="d-grid gap-2 mt-3">
-              <button style={{marginTop: 15}} type="submit" className="btn btn-primary" onClick={() => handleLogin()}>
+              <button style={{marginTop: 15}} type="submit" className="btn btn-primary" onClick={(e) => handleLogin(e)}>
                 Login
               </button>
             </div>
@@ -132,11 +181,18 @@ const Auth = () => {
             <input
               required
               type="email"
-              className="form-control mt-1"
+              className={"form-control mt-1 "}
+              style={emailError.length >0 ? {borderWidth: '1px', borderColor: 'red'}: "" }
               placeholder="Email Address"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
+            {emailError && 
+              <div className="text-danger">
+                {emailError}
+              </div>
+            }
+            
           </div>
           <div className="form-group mt-3">
             <label>Password</label>
@@ -161,7 +217,7 @@ const Auth = () => {
             />
           </div>
           <div className="d-grid gap-2 mt-3">
-            <button style={{marginTop: 15}} type="submit" className="btn btn-primary" onClick={() => handleSignUp()}>
+            <button style={{marginTop: 15}} type="submit" className="btn btn-primary" onClick={(e) => handleSignUp(e)}>
               Register
             </button>
           </div>

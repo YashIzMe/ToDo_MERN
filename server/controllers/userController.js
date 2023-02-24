@@ -13,7 +13,16 @@ exports.signupUser = async (req, res, next) => {
 
     const user = await User.findOne({ email });
     if (user) {
-        return next(new ErrorHandler("Email already exists", 401));
+        // return next(new ErrorHandler("Email already exists", 401));
+        return res.status(401).json({err: "Email already exists"})
+    }
+
+    if(password.length<6) {
+        return res.status(401).json({msg: "Password must be atleast 6 character long."})
+    }
+
+    if(contact.length<13) {
+        return res.status(401).json({msg: "Contact must be of 13 characters including country code"})
     }
 
     const newUser = await User.create({
@@ -57,18 +66,19 @@ exports.loginUser = async (req, res, next) => {
         return res.cookie('access_token', access_token, {
             httpOnly: true
         }).status(200).json({
-            msg: "Login Success"
+            msg: "Login Success",
+            user
         })
     }
 
 };
 
 exports.updateUser = async (req, res, next) => {
-    const { name, email, password, profilePic, contact } = req.body;
+    const { name, email, profilePic, contact } = req.body;
     const user = await User.findOne({ email });
 
     if (user) {
-        const updatedUser = await User.update({name: name})
+        const updatedUser = await User.findOneAndUpdate(user,{name: name})
     }
 
 };
