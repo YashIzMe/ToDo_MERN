@@ -8,7 +8,7 @@ import { DataContext } from "../../context/DataProvider";
 const server = "http://localhost:5000";
 
 
-const Auth = ({ isUserAuthenticated }) => {
+const Auth = ({ isUserAuthenticated, isUserAdmin }) => {
 
   const navigation = useNavigate();
 
@@ -45,7 +45,12 @@ const Auth = ({ isUserAuthenticated }) => {
             setAccount({ name: res.data.user.name, id: res.data.user._id })
             // console.log(res.data.user)
             isUserAuthenticated(true);
-            navigation('/home');
+            isUserAdmin(res.data.user.role==="admin"?true:false)
+            if (isUserAdmin) {
+              navigation('/adminPanel');
+            } else {
+              navigation('/home');
+            }
           }
       }).catch(err=> {
         console.log(err);
