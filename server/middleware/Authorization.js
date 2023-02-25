@@ -4,6 +4,7 @@ dotenv.config();
 
 exports.Authorization = async (req, res, next) => {
     const token = req.cookies.access_token;
+
     if(!token) {
         return res.status(404).json({
             msg: "Login first"

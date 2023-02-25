@@ -11,6 +11,7 @@ body {
   min-height: 100vh;
   font-family: 'Poppins', sans-serif;
   background-color: #F9F9F9;
+  overflow-x: hidden;
 }
 
 .App {
@@ -126,18 +127,23 @@ label {
   text-align: center;
 }
 
+.Logout {
+  margin-top: .3rem;
+}
+
 .logoutIcon {
   width: 40px;
   height: 40px;
+  cursor: pointer;
+  transition: all 0.3s ease-in;
 }
 
 .logoutIcon:hover {
-  opacity: 0.8;
+  opacity: 0.5;
 }
 
 .main-container {
   margin: 0 6rem;
-  
 }
 
 .container {
@@ -145,37 +151,94 @@ label {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  width: 80%;
+
+  justify-content: center;
 }
 
 .addtask {
   padding: 1.5rem 2rem;
   font-size: 1.5rem;
   border: none;
-  width: 80%;
+  width: 90%;
   background-color: #EEEEEE;
   border-radius: 20px;
+  outline: none;
 }
 
-.addtask:focus {
-  border: none;
-}
 
 .addIcon {
   padding: 1.5rem;
- 
+ cursor: pointer;
 }
 
 .content {
   margin-top: 3rem;
   margin-left: 1rem;
-  width: 80%;
+  /* width: 80%; */
+  justify-content: center;
 }
 
 .cont {
   background-color: white;
-  box-shadow: 0px 0px 10px 0px grey;
+  box-shadow: 0px 0px 5px 0px grey;
   border-radius: 10px;
-  padding: 1rem;
   margin-bottom: 1.5rem;
+  padding: 2rem;
 }
+
+.item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.taskName {
+  margin-left: 15px;
+  font-size: 22px;
+}
+
+.left {
+  margin-left: 1rem; 
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+}
+
+.check-box {
+  cursor: pointer;
+  height: 2rem;
+  width: 2rem;
+}
+
+.right {
+  margin-right: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  column-gap: 0.7rem;
+}
+
+.Icon {
+  cursor: pointer;
+  transition: all 0.3s ease-in;
+  color: red;
+}
+
+.Icon:hover {
+  color: grey;
+}
+
+.addForm {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  padding-left: 1rem;
+}
+
+.complete-task {
+  text-decoration: line-through;
+}
+

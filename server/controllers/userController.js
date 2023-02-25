@@ -3,7 +3,7 @@ const ErrorHandler = require('../utils/errorHandler');
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
-const cookie = require('cookie-parser');
+
 dotenv.config();
 
 //Signup user
@@ -64,14 +64,22 @@ exports.loginUser = async (req, res, next) => {
         });
 
         return res.cookie('access_token', access_token, {
-            httpOnly: true
+            httpOnly: true,
+            sameSite: 'none', 
+            secure: true
         }).status(200).json({
             msg: "Login Success",
-            user
+            user,
+            access_token
         })
     }
 
 };
+
+exports.logoutUser = async (req, res) => {
+    res.clearCookie("access_token");
+    res.send({ success: true });
+}
 
 exports.updateUser = async (req, res, next) => {
     const { name, email, profilePic, contact } = req.body;
