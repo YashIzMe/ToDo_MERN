@@ -54,7 +54,7 @@ const Auth = ({ isUserAuthenticated, isUserAdmin }) => {
             isUserAuthenticated(true);
             isUserAdmin(res.data.user.role==="admin"?true:false)
             if (res.data.user.role==="admin") {
-              navigation('/adminPanel');
+              navigation('/adminPanelUsers');
             } else {
               navigation('/home');
             }

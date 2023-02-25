@@ -6,7 +6,8 @@ import Auth from './components/Auth/Auth';
 import ResetPassword from "./components/Auth/ResetPassword";
 import Header from "./components/ToDo/Header";
 import Todo from "./components/ToDo/Todo";
-import AdminPanel from "./components/AdminPanel/AdminPanel"
+import AdminPanel from "./components/AdminPanel/AdminPanelUserTable"
+import AdminPanel2 from "./components/AdminPanel/AdminPanelTaskTable";
 import DataProvider from './context/DataProvider';
 
 const PrivateRoute = ({ isAuthenticated, ...props }) => {
@@ -40,8 +41,12 @@ function App() {
             <Route exact path="/home" element={<Todo />} />
           </Route>
           
-          <Route path='/adminPanel' element={<AdminRoute isAdmin={isAdmin} /> }>
-            <Route exact path="/adminPanel" element={<AdminPanel />} />
+          <Route path='/adminPanelUsers' element={<AdminRoute isAdmin={isAdmin} /> }>
+            <Route exact path="/adminPanelUsers" element={<AdminPanel />} />
+          </Route>
+          
+          <Route path='/adminPanelTasks' element={<AdminRoute isAdmin={isAdmin} /> }>
+            <Route exact path="/adminPanelTasks" element={<AdminPanel2 />} />
           </Route>
           
         </Routes>

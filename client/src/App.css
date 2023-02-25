@@ -242,3 +242,22 @@ label {
   text-decoration: line-through;
 }
 
+.Linker {
+  margin: 2rem 0rem;
+  display:flex;
+  justify-content: center;
+}
+
+.Linker2 {
+  background-color: #3E54AC;
+  color: white;
+  border-radius: 10px;
+  padding: 1rem 2rem;
+  text-decoration: none;
+  transition: all 0.2s ease-in;
+}
+
+.Linker2:hover {
+  color: wheat;
+  background-color: #5D3891;
+}
