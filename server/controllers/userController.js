@@ -87,11 +87,20 @@ exports.getAllUsers = async (req,res,next) => {
 }
 
 exports.updateUser = async (req, res, next) => {
-    const { name, email, profilePic, contact } = req.body;
+    let { name, email, profilePic, contact } = req.body;
     const user = await User.findOne({ email });
-
     if (user) {
-        const updatedUser = await User.findOneAndUpdate(user,{name: name})
+
+        const updatedUser = await User.findOneAndUpdate({email:user.email},{
+            name: name?name:user.name,
+            profilePic: profilePic?profilePic:user.profilePic,
+            contact: contact?contact:user.contact
+        },
+        {
+            new: true
+        })
+        return res.status(200).json({ data: updatedUser });
     }
+    return res.status(400).json({ error_msg: "err.message "});
 
 };
