@@ -73,6 +73,19 @@ exports.loginUser = async (req, res, next) => {
 
 };
 
+exports.getAllUsers = async (req,res,next) => {
+    try {
+
+        const allUsers = await User.find({});
+        return res.status(200).json({ data: allUsers });
+
+    } catch (err) {
+
+        return res.status(400).json({ error_msg: err.message });
+      
+    }
+}
+
 exports.updateUser = async (req, res, next) => {
     const { name, email, profilePic, contact } = req.body;
     const user = await User.findOne({ email });

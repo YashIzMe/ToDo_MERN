@@ -31,5 +31,20 @@ exports.updateTask = async (req, res, next) => {
         return next(new ErrorHandler("Task doesn't exist", 401));
     }
     
+    
 
+}
+
+//Get all tasks
+exports.getAllTasks = async (req,res,next) => {
+    try {
+
+        const allTasks = await Task.find({});
+        return res.status(200).json({ data: allTasks });
+
+    } catch (err) {
+
+        return res.status(400).json({ error_msg: err.message });
+      
+    }
 }
