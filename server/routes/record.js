@@ -6,7 +6,7 @@ const { Authorization } = require("../middleware/Authorization");
 
 router.route("/signup").post(signupUser);
 router.route("/login").post(loginUser);
-router.put("/updateUser",updateUser);
+router.put("/updateUser", Authorization, updateUser);
 router.get("/getAllUsers",getAllUsers);
 
 router.route("/createTask").post(Authorization, createTask);

@@ -18,11 +18,11 @@ exports.signupUser = async (req, res, next) => {
     }
 
     if(password.length<6) {
-        return res.status(401).json({msg: "Password must be atleast 6 character long."})
+        return res.status(401).json({err: "Password must be atleast 6 character long."})
     }
 
     if(contact.length<13) {
-        return res.status(401).json({msg: "Contact must be of 13 characters including country code"})
+        return res.status(401).json({err: "Contact must be of 13 characters including country code"})
     }
 
     const newUser = await User.create({
@@ -45,13 +45,13 @@ exports.loginUser = async (req, res, next) => {
     const user = await User.findOne({ email });
 
     if (!user) {
-        return next(new ErrorHandler("User doesn't exist", 401));
+        return res.status(401).json({msg: "User Does not exists"});
     }
     // console.log(user);
     let isPasswordMatched = await bcrypt.compare(password ,user.password);
     
     if (!isPasswordMatched) {
-        return next(new ErrorHandler("Password doesn't match", 401));
+        return res.status(401).json({msg: "Password does not match"});
     }
 
     if(isPasswordMatched) {
@@ -87,14 +87,14 @@ exports.updateUser = async (req, res, next) => {
     if (user) {
 
         const updatedUser = await User.findOneAndUpdate({email:user.email},{
-            name: name?name:user.name,
-            profilePic: profilePic?profilePic:user.profilePic,
-            contact: contact?contact:user.contact
+            name,
+            profilePic,
+            contact,
         },
         {
             new: true
         })
-        return res.status(200).json({ data: updatedUser });
+        return res.status(200).json({ user: updatedUser });
     }
     return res.status(400).json({ error_msg: "err.message "});
 

@@ -8,6 +8,7 @@ import Header from "./components/ToDo/Header";
 import Todo from "./components/ToDo/Todo";
 import AdminPanel from "./components/AdminPanel/AdminPanel"
 import DataProvider from './context/DataProvider';
+import EditProfile from "./components/Auth/EditProfile";
 
 const PrivateRoute = ({ isAuthenticated, ...props }) => {
   return isAuthenticated ? 
@@ -35,6 +36,10 @@ function App() {
           <Route path='/' element={<Auth isUserAuthenticated={isUserAuthenticated} isUserAdmin={isUserAdmin} />} />
           <Route path="/" element={<Auth />} />
           <Route exact path="/reset" element={<ResetPassword />} />
+
+          <Route path='/editProfile' element={<PrivateRoute isAuthenticated={isAuthenticated} /> }>
+            <Route exact path="/editProfile" element={<EditProfile />} />
+          </Route>
 
           <Route path='/home' element={<PrivateRoute isAuthenticated={isAuthenticated} /> }>
             <Route exact path="/home" element={<Todo />} />
