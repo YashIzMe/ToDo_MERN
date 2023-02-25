@@ -35,9 +35,9 @@ const Auth = ({ isUserAuthenticated, isUserAdmin }) => {
     setAuthMode(authMode === "signin" ? "signup" : "signin");
   };
 
-  useEffect(()=> {
-    isUserAuthenticated(false);
-  }, [])
+  // useEffect(()=> {
+  //   isUserAuthenticated(false);
+  // }, [])
 
   const handleLogin = (e) => {
     e.preventDefault();
