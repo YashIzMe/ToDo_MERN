@@ -105,10 +105,13 @@ const EditProfile = () => {
         <form className="Auth-form" onSubmit={(e) => e.preventDefault()}>
           <div className="Auth-form-content">
             <h3 className="Auth-form-title">Edit Profile</h3>
-              <p><Link className="goback" to="/home">Go Back</Link></p>
+              <div className="goback">
+                <p><Link to="/home">Go Back</Link></p>
+                <p><Link to="/reset">Reset Password</Link></p>
+              </div>
             <div className="form-group mt-3">
               <div className="form-group mt-3">
-                <label className="center">upload profile photo</label>
+                <label className="center">Upload profile photo</label>
                 <label className="profile-container" htmlFor="fileInput">
                   
                     <img

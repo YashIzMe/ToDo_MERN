@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { FaUserCircle } from 'react-icons/fa';
 import { GrLogout } from 'react-icons/gr';
 import axios from "axios";
@@ -25,10 +25,10 @@ const Header = ( ) => {
   return(
     <header>
       <div className="header">
-        <div className="title">TODO List</div>
+        <div className="title">Admin Panel</div>
         <div className="right-part">
           <div className="edit-profile">
-            <Link to="/editProfile" ><img src={account.user.profilePic} className="image" alt="" /></Link>
+            <button className="imageBtn"><img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" className="image" alt="" /></button>
             {/* <p className="text-center">Edit Profile</p> */}
           </div>
           <div className="Logout">

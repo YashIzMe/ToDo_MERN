@@ -144,6 +144,7 @@ const TaskList = () => {
                             type="checkbox"
                             checked={item.complete ? "checked" : ""}
                             className="check-box"
+                            onChange={()=>console.log()}
                           />
                           <span
                             className={"taskName"}

@@ -1,45 +1,61 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { DataContext } from "../../context/DataProvider";
 
+const server = "http://localhost:5000";
 const ResetPassword = () => {
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const { account, setAccount } = useContext(DataContext);
+  const [oldPassword, setOldPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
 
-  const handleResetPassword = () => {
-    console.log(password);
-    console.log(confirmPassword);
+  const handleResetPassword = (e) => {
+    e.preventDefault();
+    try {
+      axios.put(server + "/api/resetPassword", {
+        userId: account.user._id,
+        oldPassword,
+        newPassword
+      }).then(res => {
+        alert("Password changed successfully!");
+      }).catch(e => {
+        alert(e.response.data.msg);
+      })
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
   return (
     <div className="Auth-form-container">
-      <form className="Auth-form">
+      <form className="Auth-form" onSubmit={(e) => e.preventDefault()}>
         <div className="Auth-form-content">
           <div className="Auth-form-title">Reset Password</div>
           <div className="text-center">
-            <Link className="link-primary" to="/">
+            <Link className="link-primary" to="/home">
               Go Back
             </Link>
           </div>
           <div className="form-group mt-3">
-            <label>Password</label>
+            <label>Old Password</label>
             <input
               required
               type="password"
               className="form-control mt-1"
-              placeholder="Enter a new password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Enter a old password"
+              value={oldPassword}
+              onChange={(e) => setOldPassword(e.target.value)}
             />
           </div>
           <div className="form-group mt-3">
-            <label>Confirm Password</label>
+            <label>New Password</label>
             <input
               required
-              type="text"
+              type="password"
               className="form-control mt-1"
-              placeholder="Enter Password again"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
+              placeholder="Enter New Password"
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
             />
           </div>
           <div className="d-grid gap-2 mt-3">
@@ -47,7 +63,7 @@ const ResetPassword = () => {
               type="submit"
               style={{marginTop: 15, marginBottom: 10}}
               className="btn btn-primary"
-              onClick={() => handleResetPassword()}
+              onClick={(e) => handleResetPassword(e)}
             >
               Submit
             </button>

@@ -47,6 +47,7 @@ const Auth = ({ isUserAuthenticated, isUserAdmin }) => {
 
   useEffect(() => {
     isUserAuthenticated(false);
+    console.log(false)
   }, []);
 
   const handleLogin = (e) => {
@@ -63,10 +64,9 @@ const Auth = ({ isUserAuthenticated, isUserAdmin }) => {
             console.log(res.data.user);
 
             isUserAuthenticated(true);
-            isUserAdmin(res.data.user.role === "admin" ? true : false);
-
-            if (res.data.user.role === "admin") {
-              navigation("/adminPanel");
+            isUserAdmin(res.data.user.role==="admin"?true:false)
+            if (res.data.user.role==="admin") {
+              navigation('/adminPanelUsers');
             } else {
               navigation("/home");
             }
@@ -240,9 +240,7 @@ const Auth = ({ isUserAuthenticated, isUserAdmin }) => {
                 Login
               </button>
             </div>
-            <p className="text-center mt-2">
-              Reset <Link to="reset">password?</Link>
-            </p>
+            
           </div>
         </form>
       </div>
