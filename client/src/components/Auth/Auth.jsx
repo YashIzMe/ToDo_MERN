@@ -51,10 +51,9 @@ const Auth = ({ isUserAuthenticated, isUserAdmin }) => {
           if (res.status === 200) {
             setAccount({ user: res.data.user });
             console.log(res.data.user);
-
             isUserAuthenticated(true);
             isUserAdmin(res.data.user.role==="admin"?true:false)
-            if (isUserAdmin) {
+            if (res.data.user.role==="admin") {
               navigation('/adminPanel');
             } else {
               navigation('/home');
