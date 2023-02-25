@@ -6,31 +6,41 @@ const userSchema = new mongoose.Schema({
     name: {
         type: String,
         required: [true, "Please enter name"],
-        minlength: [3,"Name must be of minimum 3 characters"],
-        maxlength: [30,"Name must be of maximum 30 characters"]
+        minlength: [3, "Name must be of minimum 3 characters"],
+        maxlength: [30, "Name must be of maximum 30 characters"]
     },
+
     email: {
         type: String,
         required: [true, "Please enter email"],
         unique: [true, "Email already exists"],
     },
+
     password: {
         type: String,
         required: [true, "Please enter password"],
         minlength: [6, "Password must be of minimum 6 characters"]
     },
+
     profilePic: {
         type: String
     },
+
     contact: {
         type: String,
         required: [true, "Please enter contact"],
-        length: [13,"Contact must be of 13 characters including country code"]
+        length: [13, "Contact must be of 13 characters including country code"]
+    },
+
+    role: {
+        type: String,
+        default: "member",
+        enum: ["admin", "member"]
     }
 })
 
-userSchema.pre("save", async function(next) {
-    if(this.isModified("password")) {
+userSchema.pre("save", async function (next) {
+    if (this.isModified("password")) {
         this.password = await bcrypt.hash(this.password, 10);
     }
     next();

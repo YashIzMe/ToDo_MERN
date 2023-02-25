@@ -81,12 +81,35 @@ exports.logoutUser = async (req, res) => {
     res.send({ success: true });
 }
 
-exports.updateUser = async (req, res, next) => {
-    const { name, email, profilePic, contact } = req.body;
-    const user = await User.findOne({ email });
+// exports.updateUser = async (req, res, next) => {
+//     const { name, email, profilePic, contact } = req.body;
+//     const user = await User.findOne({ email });
 
+//         const allUsers = await User.find({});
+//         return res.status(200).json({ data: allUsers });
+
+//     } catch (err) {
+
+//         return res.status(400).json({ error_msg: err.message });
+      
+//     }
+// }
+
+exports.updateUser = async (req, res, next) => {
+    let { name, email, profilePic, contact } = req.body;
+    const user = await User.findOne({ email });
     if (user) {
-        const updatedUser = await User.findOneAndUpdate(user,{name: name})
+
+        const updatedUser = await User.findOneAndUpdate({email:user.email},{
+            name: name?name:user.name,
+            profilePic: profilePic?profilePic:user.profilePic,
+            contact: contact?contact:user.contact
+        },
+        {
+            new: true
+        })
+        return res.status(200).json({ data: updatedUser });
     }
+    return res.status(400).json({ error_msg: "err.message "});
 
 };

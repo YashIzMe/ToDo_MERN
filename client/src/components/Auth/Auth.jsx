@@ -8,8 +8,9 @@ import { useEffect } from "react";
 
 const server = "http://localhost:5000";
 
-axios.defaults.withCredentials = true;
-const Auth = ({ isUserAuthenticated }) => {
+
+const Auth = ({ isUserAuthenticated, isUserAdmin }) => {
+
   const navigation = useNavigate();
 
   let [authMode, setAuthMode] = useState("signin");
@@ -52,7 +53,12 @@ const Auth = ({ isUserAuthenticated }) => {
             console.log(res.data.user);
 
             isUserAuthenticated(true);
-            navigation("/home");
+            isUserAdmin(res.data.user.role==="admin"?true:false)
+            if (isUserAdmin) {
+              navigation('/adminPanel');
+            } else {
+              navigation('/home');
+            }
           }
         })
         .catch((err) => {
