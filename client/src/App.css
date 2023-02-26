@@ -10,7 +10,7 @@ body {
   min-height: 100vh;
   font-family: "Poppins", sans-serif;
   background-color: #f9f9f9;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
 .App {
@@ -295,5 +295,8 @@ label {
   .content {
     margin-top: 3rem;
     margin-left: 0 !important;
+  }
+  .cont {
+    padding: 2rem .4rem !important;
   }
 }
